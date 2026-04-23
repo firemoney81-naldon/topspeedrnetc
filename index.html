@@ -1,23 +1,514 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "부산지역 인터넷 가입 전문센터",
+    "description": "2026년 최신 부산 지역 인터넷 가입 상품 비교, 할인 및 현금 지원 정보 제공. 해운대구, 강서구, 연제구 등 부산 전 지역별 맞춤형 인터넷 상품을 분석하고, AI 기반 견적을 통해 최저가 가입을 도와드립니다.",
+    "url": "https://www.example.com/busan-internet-guide-2026",
+    "telephone": "051-XXX-XXXX",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "부산광역시 해운대구 센텀XX로",
+      "addressLocality": "해운대구",
+      "addressRegion": "부산광역시",
+      "postalCode": "480XX",
+      "addressCountry": "KR"
+    },
+    "openingHours": "Mo-Fr 09:00-18:00",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "부산지역 인터넷 가입 상품 목록",
+      "itemListElement": [
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"광랜 100M 요금제 (SKT, KT, LGU+)"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"기가 라이트 500M 요금제 (SKT, KT, LGU+)"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"기가 인터넷 1G 요금제 (SKT, KT, LGU+)"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"인터넷+TV 결합 상품"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"인터넷+모바일 결합 상품"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"가족 결합 할인 특약 상품"}}
+      ]
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": {"@type": "Person", "name": "김*호"},
+        "reviewBody": "부산 인터넷 가입 최저가로 했어요. 현금 지원도 많이 받았습니다. 친절한 상담 감사합니다!",
+        "reviewRating": {"@type": "Rating", "ratingValue": "5"}
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* 기본 글꼴과 색상 조화로운 부드러운 톤 적용 */
+    body {
+      font-family: 'Noto Sans KR', 'Arial', sans-serif;
+      margin: 0; padding: 0;
+      background: #fcfcfc; /* 밝은 배경 */
+      color: #333333; /* 짙은 텍스트 색상 */
+      line-height: 1.8;
+    }
+    header, section, footer {
+      max-width: 1000px; /* 섹션 최대 너비 확장 */
+      margin: 30px auto;
+      padding: 0 20px;
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* 그림자 강화 */
+      border-radius: 12px;
+    }
+    h1, h2, h3 {
+      color: #007bff; /* 메인 브랜드 색상 (파란색) */
+      margin-top: 1.5em;
+      margin-bottom: 0.8em;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; border-bottom: 3px solid #f1f1f1; padding-bottom: 10px; }
+    h3 { font-size: 1.4rem; color: #333333; }
+    p, li {
+      font-size: 1rem;
+      color: #444444;
+      margin-bottom: 1em;
+    }
+    nav ul {
+      display: flex;
+      gap: 20px;
+      padding-left: 0;
+      list-style: none;
+      border-bottom: 2px solid #007bff; /* 네비게이션바 색상 변경 */
+      margin-bottom: 1.5em;
+    }
+    nav a {
+      text-decoration: none;
+      font-weight: 600;
+      color: #007bff;
+      transition: color 0.3s ease;
+      font-size: 1.05rem;
+      padding: 5px 0;
+    }
+    nav a:hover {
+      color: #0056b3;
+    }
+
+    /* 표 스타일 */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 1rem;
+      border-radius: 8px;
+      overflow: hidden; /* 모서리 둥글게 처리 */
+    }
+    th, td {
+      border: 1px solid #e0e0e0;
+      padding: 14px 18px;
+      text-align: left; /* 텍스트 정렬 변경 */
+    }
+    th {
+      background-color: #007bff; /* 헤더 색상 변경 */
+      color: white;
+      font-weight: 700;
+    }
+    tr:nth-child(even) { /* 짝수 행 배경색 */
+      background-color: #f9f9f9;
+    }
+    td.highlight {
+      background-color: #fff3e0; /* 강조 색상 */
+      font-weight: bold;
+      color: #ff9800;
+    }
+
+    /* 입력 폼 스타일 */
+    .input-section {
+      margin-top: 25px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 반응형 그리드 */
+      gap: 20px;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333333;
+    }
+    input[type="text"], input[type="tel"], input[type="email"], select, textarea {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+      outline: none;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    button.cta-btn {
+      background-color: #ff9800; /* CTA 버튼 색상 변경 (주황색) */
+      color: white;
+      padding: 16px 30px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      align-self: flex-start;
+    }
+    button.cta-btn:hover {
+      background-color: #e68a00;
+      transform: translateY(-2px);
+    }
+
+    /* 그래프 스타일 */
+    .chart-container {
+      margin: 40px 0;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    /* FAQ 스타일 */
+    .faq .item {
+      border-bottom: 1px solid #eee;
+      padding: 18px 0;
+    }
+    .faq .item:last-child {
+      border-bottom: none;
+    }
+    .faq h3 {
+      cursor: pointer;
+      color: #333333;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq h3:after {
+      content: '+';
+      font-size: 1.2rem;
+      transition: transform 0.3s;
+    }
+    .faq h3.active:after {
+      content: '-';
+      transform: rotate(180deg);
+    }
+    .faq p {
+      margin: 0 0 15px 0;
+      color: #555;
+      display: none; /* 기본 숨김 */
+    }
+
+    /* 강조 박스 스타일 */
+    .highlight-box {
+      background-color: #f0f8ff;
+      border-left: 5px solid #007bff;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    .highlight-box p { margin: 0; }
+    .highlight-box strong { color: #0056b3; }
+
+    /* LSI 키워드 스타일 (자연스러운 문맥 강조) */
+    .lsi-keyword { color: #007bff; font-weight: 500; }
+
+    /* 링크 스타일 */
+    a.external-link {
+      color: #007bff;
+      text-decoration: underline;
+    }
+    a.external-link:hover {
+      color: #0056b3;
+    }
+  </style>
+
+  <script>
+    // FAQ toggle 기능
+    document.addEventListener('DOMContentLoaded', () => {
+      const faqItems = document.querySelectorAll('.faq .item h3');
+      faqItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const content = item.nextElementSibling;
+          const isActive = item.classList.toggle('active');
+          content.style.display = isActive ? 'block' : 'none';
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+
+  <header>
+    <h1>2026년 부산지역 인터넷 가입 완벽 가이드 및 최저가 견적 비교</h1>
+    <p>부산 지역 맞춤형 인터넷 상품을 찾고 계신가요? 2026년 최신 SKT, KT, LGU+ 통신사별 요금제와 현금 지원, 사은품 혜택을 비교하여 최저가 가입을 도와드립니다. 복잡한 인터넷 상품 정보를 쉽고 명확하게 확인하고 스마트한 선택을 하세요.</p>
     <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
+      <ul>
+        <li><a href="#overview">가이드 개요</a></li>
+        <li><a href="#regional-features">부산 지역별 특징</a></li>
+        <li><a href="#pricing">요금제 및 상품 비교</a></li>
+        <li><a href="#saving-tips">절약 팁 및 현금 지원</a></li>
+        <li><a href="#faq">자주 묻는 질문</a></li>
+        <li><a href="#contact">견적 문의</a></li>
+      </ul>
     </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+  </header>
+
+  <section id="overview">
+    <h2>부산지역인터넷 가입, 왜 신중해야 할까요?</h2>
+    <p>부산광역시는 대한민국 제2의 도시로, 해운대구, 강서구 등 신도시 개발과 더불어 기존 구도심이 혼재되어 있어 인터넷 인프라 환경이 지역별로 큰 차이를 보입니다. 단순히 요금만 비교하는 것이 아니라, 거주하는 지역의 인터넷 환경(주거 형태, 통신사 인프라)을 고려하여 최적의 상품을 선택해야 합니다. 2026년 현재 통신사들은 다양한 프로모션과 <span class="lsi-keyword">현금 지원</span>을 경쟁적으로 제공하고 있으므로, 정확한 정보 습득이 <span class="lsi-keyword">최저가</span> 가입의 핵심입니다.</p>
+    <div class="highlight-box">
+      <p><strong>네이버, 구글 검색을 통해 얻은 수많은 정보 중, 우리 집에 가장 적합한 상품을 찾는 것이 중요합니다.</strong> 특히 부산에서는 해운대구, 강서구, 연제구 등 주요 지역별로 <span class="lsi-keyword">인터넷 설치</span> 가능 여부와 속도가 달라질 수 있으므로, 전문가의 <span class="lsi-keyword">견적 문의</span>가 필수입니다.</p>
+    </div>
+    <p>본 가이드는 부산 지역민을 위해 SK텔레콤, KT, LG U+ 등 주요 통신사의 2026년 최신 요금제를 비교하고, <span class="lsi-keyword">결합 할인</span> 및 <span class="lsi-keyword">사은품</span> 정보를 분석하여 합리적인 <span class="lsi-keyword">인터넷 가입 비용</span>을 안내해 드립니다. <span class="lsi-keyword">AI 분석</span>을 활용한 <span class="lsi-keyword">인터넷 요금제 추천</span> 시스템을 통해 사용자 개개인에게 최적화된 상품을 찾아드립니다.</p>
+  </section>
+
+  <section id="regional-features">
+    <h2>부산광역시 지역별 인터넷 인프라 및 가입 특징 분석</h2>
+    <p>부산은 지리적 특성상 해안가와 내륙의 인프라 격차가 존재하며, 신축 아파트와 구축 주택이 혼재되어 있습니다. <span class="lsi-keyword">부산지역인터넷</span> 가입 시, 거주하는 구(區) 단위의 인프라 특성을 이해하는 것이 중요합니다. 다음은 주요 부산 지역별 <span class="lsi-keyword">인터넷 설치</span> 환경의 특징입니다.</p>
+
+    <h3>1. 해운대구 (Haeundae-gu)</h3>
+    <p>해운대구는 부산의 대표적인 신흥 부촌이자 관광 중심지입니다. 마린시티, 센텀시티, 엘시티 등 초고층 주상복합과 신축 아파트가 밀집해 있어 <span class="lsi-keyword">기가 인터넷</span> 및 <span class="lsi-keyword">10기가 인터넷</span> 인프라가 가장 잘 구축된 지역 중 하나입니다. KT, SKT, LGU+ 모두 경쟁적으로 투자를 하고 있으며, <span class="lsi-keyword">초고속 인터넷</span>을 원하는 신규 가입자가 많습니다. 따라서 통신사 간 <span class="lsi-keyword">현금 지원</span> 경쟁이 치열하여 <span class="lsi-keyword">최저가</span> 가입 기회가 높습니다. <span class="lsi-keyword">2026년 인터넷 가입</span>을 희망하는 <span class="lsi-keyword">신규</span> 고객은 <span class="lsi-keyword">사은품</span> 및 <span class="lsi-keyword">할인 혜택</span>을 꼼꼼히 비교해야 합니다.</p>
+
+    <h3>2. 강서구 (Gangseo-gu)</h3>
+    <p>강서구는 명지국제신도시, 에코델타시티 등 대규모 신규 개발이 진행되는 지역입니다. 아직 인프라 구축이 진행 중인 곳도 있으나, 대부분의 신축 아파트는 <span class="lsi-keyword">기가 인터넷</span>이 기본 설치되어 있습니다. 특히 신도시 특성상 <span class="lsi-keyword">가족 결합 할인</span>을 통한 <span class="lsi-keyword">인터넷 비용 절감</span>을 원하는 30~40대 가입자가 많습니다. 강서구는 <span class="lsi-keyword">부산지역인터넷</span> 가입 시 통신사별 <span class="lsi-keyword">현금 지원 금액</span> 차이가 크지 않을 수 있으나, <span class="lsi-keyword">약정 기간</span> 및 <span class="lsi-keyword">Wi-Fi 공유기 지원</span> 여부를 확인해야 합니다. 강서구 내의 <span class="lsi-keyword">녹산공단</span> 등 산업단지는 <span class="lsi-keyword">기업 인터넷</span> 가입 시 별도 견적이 필요합니다.</p>
+
+    <h3>3. 연제구 및 동래구 (Yeonje-gu & Dongnae-gu)</h3>
+    <p>연제구와 동래구는 부산의 전통적인 주거 및 행정 중심지입니다. 연제구의 시청 주변과 동래구의 사직동 등은 인구 밀집도가 높고 주거 형태가 다양합니다. 신축 아파트와 더불어 노후화된 주택도 많아 <span class="lsi-keyword">인터넷 설치</span> 가능 여부를 정확하게 확인해야 합니다. 특히 <span class="lsi-keyword">구도심</span> 지역의 경우 <span class="lsi-keyword">기가 인터넷</span> 설치가 제한될 수 있으며, <span class="lsi-keyword">광랜(100M)</span> 위주로 <span class="lsi-keyword">인터넷 가입</span>이 이루어질 수 있습니다. <span class="lsi-keyword">부산 동래구</span> 및 <span class="lsi-keyword">연제구</span> 가입 시에는 통신사별 인프라 <span class="lsi-keyword">차이점</span>을 명확히 파악하는 것이 중요합니다.</p>
+
+    <h3>4. 금정구, 사하구, 남구, 북구, 수영구, 기장군 등 기타 지역</h3>
+    <p><strong>금정구:</strong> 부산대학교가 위치해 있어 <span class="lsi-keyword">대학생</span> 및 <span class="lsi-keyword">1인 가구</span>의 수요가 높습니다. <span class="lsi-keyword">저렴한곳</span>을 찾는 수요가 많으며, <span class="lsi-keyword">월 평균 요금</span>을 중요하게 생각합니다. <strong>사하구, 남구, 북구:</strong> 주거 밀집 지역으로, 아파트 단지별로 통신사별 인프라 구축 수준이 상이합니다. <span class="lsi-keyword">SKT, KT, LGU+</span>의 <span class="lsi-keyword">상품 비교</span>를 통해 <span class="lsi-keyword">저렴한곳</span>을 찾는 것이 필수입니다. <strong>수영구:</strong> 광안리 해수욕장 주변은 관광 특구로 인프라가 잘 되어 있으나, <span class="lsi-keyword">망미동</span> 등 일부 지역은 <span class="lsi-keyword">구도심</span>의 특성도 가지고 있습니다. <strong>기장군:</strong> 일광 신도시 등 신규 개발 지역을 제외하면 농어촌 지역도 있어 인프라 확인이 필수입니다.</p>
+    <p>이 외에도 <span class="lsi-keyword">부산 중구</span>, <span class="lsi-keyword">영도구</span>, <span class="lsi-keyword">서구</span>, <span class="lsi-keyword">동구</span>, <span class="lsi-keyword">사상구</span> 등 부산 전 지역의 특성을 고려하여 <span class="lsi-keyword">인터넷 상품</span>을 선택해야 합니다. <span class="lsi-keyword">부산지역인터넷</span> 가입 시 <span class="lsi-keyword">내돈내산 후기</span>를 참고하여 <span class="lsi-keyword">전문 업체</span>의 상담을 받는 것을 추천합니다.</p>
+  </section>
+
+  <section id="pricing">
+    <h2>2026년 부산지역 인터넷 요금제 및 상품 비교 (현금 지원 및 사은품 포함)</h2>
+    <p>통신사별 요금제는 기본적으로 유사하지만, <span class="lsi-keyword">결합 할인</span> 및 <span class="lsi-keyword">현금 지원</span> 금액에서 큰 차이가 발생합니다. 2026년 <span class="lsi-keyword">부산 인터넷 가입</span> 시 주요 통신사별 <span class="lsi-keyword">평균 가격</span> 및 <span class="lsi-keyword">혜택</span>을 비교해 보세요.</p>
+    <p><strong>주요 통신사별 100M 광랜 기준 3년 약정 요금제 비교 (2026년 기준)</strong></p>
+    <table>
+      <thead>
+        <tr>
+          <th>통신사</th>
+          <th>월 요금 (원/부가세 포함)</th>
+          <th>가입 시 현금/사은품 지원 (평균 금액)</th>
+          <th>주요 특징 및 <span class="lsi-keyword">장점</span></th>
+          <th><span class="lsi-keyword">단점</span> 및 비고</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>SKT (SK브로드밴드)</td>
+          <td>22,000 ~ 24,200</td>
+          <td class="highlight">최대 30만원 이상 지원</td>
+          <td><span class="lsi-keyword">SKT 모바일 결합</span> 시 할인 폭 큼, <span class="lsi-keyword">AI 스피커 연동</span> 서비스 제공</td>
+          <td><span class="lsi-keyword">신규</span> 가입 시 현금 지원이 상대적으로 낮을 수 있음 (결합 위주)</td>
+        </tr>
+        <tr>
+          <td>KT (기가지니)</td>
+          <td>22,000 ~ 25,300</td>
+          <td class="highlight">최대 25만원 ~ 35만원 지원</td>
+          <td><span class="lsi-keyword">기가 인터넷</span> 커버리지 넓음 (부산 전 지역 인프라), <span class="lsi-keyword">품질</span> 안정성 높음</td>
+          <td>타사 대비 <span class="lsi-keyword">요금</span>이 비쌀 수 있음 (인프라 비용)</td>
+        </tr>
+        <tr>
+          <td>LGU+ (LG유플러스)</td>
+          <td>22,000 ~ 24,200</td>
+          <td class="highlight">최대 30만원 이상 지원</td>
+          <td><span class="lsi-keyword">IPTV</span>와 결합 시 채널 구성 좋음, <span class="lsi-keyword">가족 결합 할인</span> 혜택 우수</td>
+          <td>일부 <span class="lsi-keyword">구도심</span> 지역 인프라가 KT, SKT 대비 약할 수 있음</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>※ 2026년 주요 키워드 분석 결과:</strong> <span class="lsi-keyword">현금 지원</span> 및 <span class="lsi-keyword">사은품</span>은 가입 시점에 따라 변동성이 매우 큽니다. <span class="lsi-keyword">네이버</span>, <span class="lsi-keyword">구글</span>, <span class="lsi-keyword">유튜브</span> 등 다양한 채널에서 <span class="lsi-keyword">부산 인터넷 가입</span>을 검색하고 <span class="lsi-keyword">내돈내산 후기</span>를 참고하여 <span class="lsi-keyword">최저가</span> <span class="lsi-keyword">견적</span>을 받아보는 것이 중요합니다.</p>
+
+    <div class="chart-container">
+      <canvas id="internetPriceChart" width="800" height="400" aria-label="부산지역 통신사별 인터넷 요금제 평균 가격 비교 그래프" role="img"></canvas>
+    </div>
+    <p>위 그래프는 2026년 기준 부산 지역 주요 통신사별 100M 광랜 요금제 <span class="lsi-keyword">평균 가격</span>과 <span class="lsi-keyword">예상 현금 지원 금액</span>을 시각화한 것입니다. <span class="lsi-keyword">현금 지원</span> 규모가 <span class="lsi-keyword">가격</span>보다 <span class="lsi-keyword">체감 할인 폭</span>을 결정하는 중요한 요소임을 알 수 있습니다.</p>
+    <p><strong>자동완성 키워드 분석:</strong> <span class="lsi-keyword">부산 인터넷 가입 현금지원 많이 주는 곳</span>, <span class="lsi-keyword">부산 인터넷 싼곳</span>, <span class="lsi-keyword">부산 기가 인터넷 가격</span>, <span class="lsi-keyword">부산 인터넷 설치 후기</span> 등 사용자들이 <span class="lsi-keyword">가입</span> 시 <span class="lsi-keyword">비용</span>과 <span class="lsi-keyword">혜택</span>을 가장 중요하게 생각하는 것으로 나타납니다. 특히 <span class="lsi-keyword">디시</span> 등 커뮤니티에서는 <span class="lsi-keyword">사은품</span>과 <span class="lsi-keyword">현금 지원</span>에 대한 <span class="lsi-keyword">내돈내산 후기</span>가 활발하게 공유되고 있습니다.</p>
+  </section>
+
+  <section id="saving-tips">
+    <h2>2026년 부산지역 인터넷 요금 절감 방법 및 현명한 가입 전략</h2>
+    <p>부산 지역에서 <span class="lsi-keyword">저렴한</span> <span class="lsi-keyword">인터넷 가입</span>을 위한 핵심적인 팁들을 정리했습니다. 단순한 <span class="lsi-keyword">가격 비교</span>를 넘어 <span class="lsi-keyword">실질적인 비용 절감</span> 효과를 극대화할 수 있습니다.</p>
+    <ul>
+      <li><strong>결합 상품 활용:</strong> 통신사별 <span class="lsi-keyword">모바일 결합</span>, <span class="lsi-keyword">TV 결합</span> 등 다양한 결합 상품을 활용하면 월 <span class="lsi-keyword">요금</span>을 크게 <span class="lsi-keyword">할인</span> 받을 수 있습니다. 특히 SKT는 <span class="lsi-keyword">가족 결합 할인</span> 혜택이 우수하여 온 가족이 같은 통신사를 이용할 경우 <span class="lsi-keyword">비용 절감</span> 효과가 극대화됩니다. <span class="lsi-keyword">KT</span>는 <span class="lsi-keyword">모바일 결합</span> 시 <span class="lsi-keyword">요금</span>을 획기적으로 낮출 수 있습니다.</li>
+      <li><strong>현금 지원 및 사은품 극대화:</strong> <span class="lsi-keyword">부산지역인터넷</span> <span class="lsi-keyword">신규</span> 가입 시 통신사별, 대리점별 <span class="lsi-keyword">현금 지원 금액</span>이 상이합니다. <span class="lsi-keyword">평균 금액</span>을 확인한 후 <span class="lsi-keyword">최대 혜택</span>을 제공하는 곳을 선택해야 합니다. 이는 <span class="lsi-keyword">인터넷 가입</span> 전체 <span class="lsi-keyword">비용</span>을 낮추는 핵심 전략입니다.</li>
+      <li><strong>약정 기간 선택:</strong> 대부분 3년 약정을 기준으로 <span class="lsi-keyword">현금 지원</span>을 제공하지만, 1년 또는 2년 약정 상품도 있습니다. 단기 거주 예정이거나 <span class="lsi-keyword">이사</span> 계획이 있는 경우, <span class="lsi-keyword">단기 약정</span>의 <span class="lsi-keyword">장점</span>과 <span class="lsi-keyword">단점</span>을 비교하여 선택해야 합니다.</li>
+      <li><strong><span class="lsi-keyword">AI 분석</span> 및 <span class="lsi-keyword">전문 업체</span> 상담:</strong> <span class="lsi-keyword">ChatGPT</span>, <span class="lsi-keyword">Gemini</span>와 같은 <span class="lsi-keyword">AI</span> 기술은 복잡한 <span class="lsi-keyword">요금제</span> <span class="lsi-keyword">상품 비교</span>를 도와줍니다. 하지만 <span class="lsi-keyword">부산 지역</span> 특화 <span class="lsi-keyword">전문 업체</span>의 상담을 통해 실시간 <span class="lsi-keyword">현금 지원</span> <span class="lsi-keyword">이벤트</span> 및 <span class="lsi-keyword">상품</span> 정보를 얻는 것이 가장 확실한 방법입니다.</li>
+    </ul>
+    <p><strong>참고:</strong> <span class="lsi-keyword">인터넷 가입</span> 시 <span class="lsi-keyword">사은품</span>이나 <span class="lsi-keyword">현금 지원</span>은 통신사 본사 정책과 대리점 정책에 따라 <span class="lsi-keyword">차이점</span>이 발생합니다. <span class="lsi-keyword">부산</span> 지역 특성상 <span class="lsi-keyword">가입자</span> 수요가 높은 <span class="lsi-keyword">해운대구</span>, <span class="lsi-keyword">강서구</span> 등은 <span class="lsi-keyword">경쟁</span>이 치열하여 <span class="lsi-keyword">현금지원 금액</span>이 높게 책정되는 경우가 많습니다.</p>
+  </section>
+
+  <section id="faq" class="faq">
+    <h2>자주 묻는 질문 (FAQ) - 부산 인터넷 가입 편</h2>
+    <div class="item">
+      <h3>Q1: 부산지역인터넷 가입 시 <span class="lsi-keyword">현금 지원</span>은 얼마나 받을 수 있나요?</h3>
+      <p>A: <span class="lsi-keyword">현금 지원 금액</span>은 통신사, 요금제 종류(인터넷 단독 또는 결합), 약정 기간, 가입 시점의 프로모션에 따라 크게 달라집니다. <span class="lsi-keyword">평균 금액</span>은 20만 원에서 40만 원 사이로 형성되나, 특정 기간에는 <span class="lsi-keyword">최대 50만원 이상</span>의 <span class="lsi-keyword">현금 지원</span>을 받을 수도 있습니다. <span class="lsi-keyword">부산지역인터넷 전문 업체</span>와 상담하여 실시간으로 변동하는 <span class="lsi-keyword">지원금액</span>을 확인하는 것이 가장 정확합니다.</p>
+    </div>
+    <div class="item">
+      <h3>Q2: <span class="lsi-keyword">SKT</span>, <span class="lsi-keyword">KT</span>, <span class="lsi-keyword">LGU+</span> 중 어느 통신사가 <span class="lsi-keyword">부산지역</span>에서 가장 좋은가요?</h3>
+      <p>A: 통신사별 <span class="lsi-keyword">장단점</span>이 명확합니다. <span class="lsi-keyword">KT</span>는 오래된 인프라 구축으로 <span class="lsi-keyword">부산</span> 전 지역의 커버리지가 가장 넓고 안정적이라는 <span class="lsi-keyword">장점</span>이 있습니다. <span class="lsi-keyword">SKT</span>와 <span class="lsi-keyword">LGU+</span>는 <span class="lsi-keyword">모바일 결합</span> <span class="lsi-keyword">할인</span> 혜택이 매우 우수하여 기존 휴대폰 사용자에 유리합니다. 거주하시는 지역의 인프라 상태(신축/구축 아파트 여부)와 기존 사용 통신사를 고려하여 <span class="lsi-keyword">장단점</span>을 비교해야 합니다.</p>
+    </div>
+    <div class="item">
+      <h3>Q3: <span class="lsi-keyword">기가 인터넷</span>이 꼭 필요한가요? <span class="lsi-keyword">100M 광랜</span>과 <span class="lsi-keyword">차이점</span>은 무엇인가요?</h3>
+      <p>A: <span class="lsi-keyword">100M 광랜</span>은 일반적인 웹서핑, 동영상 스트리밍, <span class="lsi-keyword">SNS</span> (트위터, 인스타그램, 페이스북) 이용에 충분합니다. 하지만 <span class="lsi-keyword">4K/8K 고화질 스트리밍</span>, <span class="lsi-keyword">온라인 게임</span> (특히 <span class="lsi-keyword">FPS 게임</span> 등), <span class="lsi-keyword">대용량 파일 업로드/다운로드</span>가 잦은 경우 <span class="lsi-keyword">기가 인터넷</span> (500M~1G)이 필수입니다. <span class="lsi-keyword">가격</span> <span class="lsi-keyword">차이점</span>은 월 5천 원 내외이므로, 사용 목적에 따라 선택하는 것이 좋습니다. <span class="lsi-keyword">부산</span> <span class="lsi-keyword">해운대구</span>, <span class="lsi-keyword">강서구</span> 등 신도시 거주자는 대부분 <span class="lsi-keyword">기가 인터넷</span>을 선택합니다.</p>
+    </div>
+    <div class="item">
+      <h3>Q4: <span class="lsi-keyword">인터넷 설치</span>가 안 되는 지역도 있나요?</h3>
+      <p>A: 네, <span class="lsi-keyword">부산</span>의 일부 <span class="lsi-keyword">구도심</span>이나 <span class="lsi-keyword">기장군</span>의 외곽 지역, 혹은 <span class="lsi-keyword">영도구</span>의 일부 섬 지역 등에서는 <span class="lsi-keyword">인터넷 설치</span>가 제한적이거나 <span class="lsi-keyword">100M 광랜</span>만 가능한 경우가 있습니다. 특히 주거 형태가 빌라나 주택인 경우 통신사별 인프라 <span class="lsi-keyword">차이점</span>이 발생할 수 있으므로, <span class="lsi-keyword">전문 업체</span>에 <span class="lsi-keyword">견적 문의</span> 시 주소를 정확히 알려주셔야 합니다.</p>
+    </div>
+    <div class="item">
+      <h3>Q5: <span class="lsi-keyword">부산 인터넷 가입</span> 시 <span class="lsi-keyword">현금 지원</span> 외에 받을 수 있는 <span class="lsi-keyword">사은품</span>은 무엇인가요?</h3>
+      <p>A: <span class="lsi-keyword">현금 지원</span> 외에 <span class="lsi-keyword">상품권</span> (신세계 상품권, 백화점 상품권 등), <span class="lsi-keyword">와이파이 공유기</span> 무상 지원, <span class="lsi-keyword">TV 셋톱박스</span> 할인 등의 <span class="lsi-keyword">사은품</span>을 제공받을 수 있습니다. <span class="lsi-keyword">현금</span>과 <span class="lsi-keyword">상품권</span>을 합쳐 <span class="lsi-keyword">총 지원 금액</span>이 가장 높은 <span class="lsi-keyword">상품</span>을 선택하는 것이 <span class="lsi-keyword">저렴한곳</span>을 찾는 방법입니다.</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>부산지역인터넷 맞춤 견적 문의 및 상담 신청</h2>
+    <p>아래 양식을 작성하시면 부산 지역 <span class="lsi-keyword">인터넷 가입</span> 전문가가 고객님의 주소지 인프라를 확인하고 <span class="lsi-keyword">최저가 견적</span>을 신속하게 안내해 드립니다. <span class="lsi-keyword">AI 분석</span> 기반의 <span class="lsi-keyword">상품 추천</span>과 실시간 <span class="lsi-keyword">현금 지원</span> <span class="lsi-keyword">금액</span>을 지금 바로 확인해 보세요.</p>
+    <form action="/submit-internet-quote" method="post" aria-label="부산지역 인터넷 가입 견적 문의 폼">
+      <div class="input-section">
+        <div class="input-group">
+          <label for="name">신청자 성함</label>
+          <input type="text" id="name" name="name" placeholder="홍길동" required />
+        </div>
+        <div class="input-group">
+          <label for="phone">연락처</label>
+          <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}" placeholder="예: 010-1234-5678" required />
+        </div>
+        <div class="input-group">
+          <label for="address">설치 희망 주소지 (부산 지역)</label>
+          <input type="text" id="address" name="address" placeholder="예: 부산광역시 해운대구 마린시티로 123" required />
+        </div>
+        <div class="input-group">
+          <label for="existingProvider">기존 사용 통신사</label>
+          <select id="existingProvider" name="existingProvider" required>
+            <option value="" disabled selected>선택하세요</option>
+            <option value="none">없음 (신규)</option>
+            <option value="skt">SKT (SK브로드밴드)</option>
+            <option value="kt">KT</option>
+            <option value="lguplus">LG U+</option>
+            <option value="other">기타</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="speed">희망 인터넷 속도</label>
+          <select id="speed" name="speed" required>
+            <option value="" disabled selected>선택하세요</option>
+            <option value="100m">광랜 (100Mbps)</option>
+            <option value="500m">기가 라이트 (500Mbps)</option>
+            <option value="1g">기가 인터넷 (1Gbps)</option>
+            <option value="10g">10기가 인터넷 (10Gbps)</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="bundle">결합 희망 상품</label>
+          <select id="bundle" name="bundle">
+            <option value="internet-only">인터넷 단독</option>
+            <option value="internet-tv">인터넷 + TV</option>
+            <option value="internet-mobile">인터넷 + 모바일 결합</option>
+            <option value="all-in-one">인터넷 + TV + 모바일 결합</option>
+          </select>
+        </div>
+        <div class="input-group" style="grid-column: 1 / -1;">
+          <label for="additionalInfo">추가 문의 사항 (현금 지원, 사은품, 2026년 <span class="lsi-keyword">신규</span> <span class="lsi-keyword">이벤트</span> 등)</label>
+          <textarea id="additionalInfo" name="additionalInfo" rows="4" placeholder="특별히 알고 싶은 사항이나 요청 사항을 적어주세요. 예: 해운대구 우동 아파트, KT 기가 인터넷 견적 부탁드립니다. 현금지원 많이 받고 싶어요."></textarea>
+        </div>
+      </div>
+      <button type="submit" class="cta-btn">맞춤 견적 요청하기</button>
+    </form>
+  </section>
+
+  <section id="external-resources">
+    <h2>신뢰할 수 있는 외부 참고자료 및 연관 키워드</h2>
+    <p>보다 정확하고 객관적인 정보를 위해 공신력 있는 기관의 자료를 참고할 수 있습니다. <span class="lsi-keyword">네이버</span>, <span class="lsi-keyword">구글</span>, <span class="lsi-keyword">유튜브</span> 등에서 <span class="lsi-keyword">부산지역인터넷</span> 관련 정보를 검색할 때 <span class="lsi-keyword">AI 분석</span> 정보와 함께 아래의 공식 자료를 확인해 보세요.</p>
+    <ul>
+      <li><a href="https://www.msit.go.kr" target="_blank" rel="noopener" class="external-link">과학기술정보통신부 - 통신 관련 정책 및 통계</a></li>
+      <li><a href="https://www.kcc.go.kr" target="_blank" rel="noopener" class="external-link">방송통신위원회 - 통신 분쟁 조정 및 소비자 보호</a></li>
+      <li><a href="https://terms.naver.com/entry.naver?docId=2072126" target="_blank" rel="noopener" class="external-link">네이버 지식백과 - 광대역 통합망</a></li>
+      <li><a href="https://www.kt.com" target="_blank" rel="noopener" class="external-link">KT 공식 홈페이지</a></li>
+      <li><a href="https://www.skbroadband.com" target="_blank" rel="noopener" class="external-link">SK브로드밴드 공식 홈페이지</a></li>
+      <li><a href="https://www.lguplus.com" target="_blank" rel="noopener" class="external-link">LG유플러스 공식 홈페이지</a></li>
+    </ul>
+    <p><strong>함께 많이 찾는 키워드:</strong> <span class="lsi-keyword">부산 인터넷 가입</span>, <span class="lsi-keyword">부산지역인터넷</span>, <span class="lsi-keyword">해운대구 인터넷</span>, <span class="lsi-keyword">강서구 인터넷</span>, <span class="lsi-keyword">연제구 인터넷</span>, <span class="lsi-keyword">인터넷 가입 사은품 많이 주는 곳</span>, <span class="lsi-keyword">인터넷 현금 지원</span>, <span class="lsi-keyword">인터넷 요금 비교</span>, <span class="lsi-keyword">인터넷 가입 혜택</span>, <span class="lsi-keyword">인터넷 최저가</span>, <span class="lsi-keyword">부산 인터넷 설치 후기</span>, <span class="lsi-keyword">통신사 변경 혜택</span>.</p>
+  </section>
+
+  <!-- Chart.js 라이브러리 로드 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const ctx = document.getElementById('internetPriceChart').getContext('2d');
+    const internetPriceChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['SKT (100M)', 'KT (100M)', 'LGU+ (100M)'],
+        datasets: [{
+          label: '평균 월 요금 (원)',
+          data: [23000, 24000, 23500],
+          backgroundColor: '#007bff',
+          borderRadius: 6,
+          borderWidth: 1,
+          borderColor: '#0056b3',
+          hoverBackgroundColor: '#0056b3'
+        }, {
+          label: '현금 지원 금액 (원)',
+          data: [300000, 320000, 310000],
+          backgroundColor: '#ff9800',
+          borderRadius: 6,
+          borderWidth: 1,
+          borderColor: '#e68a00',
+          hoverBackgroundColor: '#e68a00'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 50000,
+              callback: value => value.toLocaleString() + '원'
+            },
+            title: {
+              display: true,
+              text: '금액 (원)'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: '통신사 및 상품'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            callbacks: {
+              label: context => {
+                let label = context.dataset.label || '';
+                if (label) {
+                  label += ': ';
+                }
+                label += context.parsed.y.toLocaleString() + '원';
+                return label;
+              }
+            }
+          }
+        }
+      }
+    });
+  </script>
+  
